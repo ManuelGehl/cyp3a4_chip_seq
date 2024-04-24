@@ -10,9 +10,10 @@ This study aims to identify binding sites and determine how they are influenced 
 
 ## Quality control $ trimming
 This ChIP-seq analysis involved four different ChIP settings, each targeting either a transcription factor (PXR or p300) or a histone modification (H3K4me1 or H3K27ac). 
-The experiments were conducted with and without Rifampin to understand the drug's impact on protein-DNA interactions. The dataset also included one input control.
-The following table summarizes the experiments and their descriptions:
+The experiments were conducted with and without Rifampin to understand the drug's impact on protein-DNA interactions. The dataset also included one input control (**Tab. 1**).
 
+<br></br>
+**Table 1: Overview about the used datasets.**
 | Experiment Number | Description                                         |
 |-------------------|-----------------------------------------------------|
 | SRR1642051        | ChIP-seq on Human Hepatocytes- Rif_K27ac             |
@@ -24,6 +25,8 @@ The following table summarizes the experiments and their descriptions:
 | SRR1642057        | ChIP-seq on Human Hepatocytes- Rif PXR               |
 | SRR1642058        | ChIP-seq on Human Hepatocytes- Rif p300              |
 | SRR1642059        | ChIP-seq on Human Hepatocytes- DMSO p300             |
+
+<br></br>
 
 The sequencing data was downloaded from the Sequence Read Archive (SRA) using SRAtoolkit and quality control (QC) was performed with FASTQC. The entire process was organized in a shell script named `download_fastqc_pipe.sh`, which automates the download and QC steps for all samples.
 Quality assessment revealed notable differences among the sequencing data. While the samples SRR1642051 up to SRR1642055 showed overall good quality, the samples ranging from SRR1642056 to SRR1642059 exhibited several quality issues. These issues included high levels of sequence duplications, adapter contaminations, pronounced GC content shifts, and problems with the sequencing tiles. The samples ranging from SRR1642051 to SRR1642054 also showed slight GC content shifts and occasional tile issues, but these were not as pronounced as in the latter group.
@@ -45,6 +48,8 @@ Peak calling was performed to identify regions with significant protein-DNA inte
 
 The following table summarizes the number of peaks obtained for each sample after filtering, with the first column indicating the corresponding experiment description:
 
+<br></br>
+**Table 2: Number of called peaks for each sample after filtering by p-value < 1e-5 and blacklisted regions.**
 | Description                                       | Number of Peaks | Experiment              |
 |---------------------------------------------------|-----------------|-------------------------|
 | H3K27ac - Rifampin                                | 56,819          | SRR1642051              |
@@ -57,24 +62,56 @@ The following table summarizes the number of peaks obtained for each sample afte
 | p300 - DMSO                                       | 3,402           | SRR1642059              |
 | **Total**                                         | **131,881**     | **Total**               |
 
+<br></br>
+
 The total number of resulting peaks across all samples after filtering was 131,881. This peak calling and filtering process provides a set of reliable regions for subsequent analysis, reducing the likelihood of false positives due to genomic artifacts.
 
 ## Genomic arithmetic
 
 To assess the unique and intersecting peaks between DMSO- and Rifampin-treated samples, BEDtools was used. A pipeline (`overlapping_peaks.sh`) was created to determine the number of unique and intersecting peaks for each pair of DMSO and Rifampin experiments. The results were outputted as TSV files, and a Jupyter notebook (`venn_diagrams.ipynb`) was used to generate Venn diagrams for visualization.
 
-This analysis revealed that there was no strong recruitment of any transcription factor upon Rifampin treatment. In contrast, the authors of the original study reported a roughly six-fold increase in PXR binding upon Rifampin treatment. However, a significant limitation in the current analysis is the lack of replicates, which affects the reliability of differential binding studies.
+This analysis revealed that there was no strong recruitment of any transcription factor upon Rifampin treatment (**Fig. 1**). In contrast, the authors of the original study reported a roughly six-fold increase in PXR binding upon Rifampin treatment. However, a significant limitation in the current analysis is the lack of replicates, which affects the reliability of differential binding studies.
 
-To further understand the impact of Rifampin treatment, all unique peaks from DMSO-treated experiments were combined into `dmso_overlaps.bed`, while all unique peaks from Rifampin-treated experiments were combined into `rif_overlaps.bed`. Using BEDtools, the number of unique peaks in each dataset and their intersection were calculated, aiming to identify peaks that only appear in Rifampin-treated samples but not in DMSO-treated samples. These unique peaks are candidates for regions potentially recruited by Rifampin treatment and were designated as Rifampin-Induced Regions (RIRs) by the authors of the study.
+<br></br>
+![Figure1](figures/overlap.png)
+
+**Figure 1: Overlap between DMSO and Rifampin-treated samples for each antibody.**
+<br></br>
+
+To further understand the impact of Rifampin treatment, all unique peaks from DMSO-treated experiments were combined into `dmso_overlaps.bed`, while all unique peaks from Rifampin-treated experiments were combined into `rif_overlaps.bed`. Using BEDtools, the number of unique peaks in each dataset and their intersection were calculated, aiming to identify peaks that only appear in Rifampin-treated samples but not in DMSO-treated samples. Both DMSO-treated and Rifampin-treated samples show a similar number of intersecting peaks, with each treatment group having approximately 4,700 unique peaks. The overlapping proportion between the two groups is around 2,000 peaks, indicating a significant intersection between the different treatment conditions (**Fig. 2**). The 2708 unique peaks are candidates for regions potentially recruited by Rifampin treatment and were designated as Rifampin-Induced Regions (RIRs) by the authors of the study.
+
+<br></br>
+![Figure2](figures/overlap2.png)
+
+**Figure 2: Overlap between DMSO and Rifampin-treated samples for all antibodies.**
+<br></br>
 
 A significant observation from the analysis was the identification of Rifampin-Induced Regions (RIRs) in the genomic vicinity of the open reading frame (ORF) of CYP3A4. CYP3A4 is one of the genes with the highest differential expression upon Rifampin treatment, as previously reported. Two RIRs were identified in this region. The first corresponds to the promoter region of CYP3A4, suggesting a possible mechanism for the gene's increased expression. The second RIR aligns with an enhancer located near the proximal CYP3A7 gene. This finding is consistent with the results reported by the authors of the original study.
 
 ## Annotation and enrichment analysis
 
-The Rifampin-Induced Regions (RIRs) were annotated using ChIPSeeker, with the TxDb.Hsapiens.UCSC.hg38.knownGene database and the org.Hs.eg.db package. This annotation process was conducted using the script `peak_annotation.rmd`. The analysis revealed that most of the identified peaks were located in distal regions rather than promoter regions, which aligns with the findings of the original study. This suggests that the RIRs might be linked to regulatory elements such as enhancers.
+The Rifampin-Induced Regions (RIRs) were annotated using ChIPSeeker, with the TxDb.Hsapiens.UCSC.hg38.knownGene database and the org.Hs.eg.db package. This annotation process was conducted using the script `peak_annotation.rmd`. The analysis revealed that most of the identified peaks were located in distal regions rather than promoter regions, which aligns with the findings of the original study (**Fig. 3**). This suggests that the RIRs might be linked to regulatory elements such as enhancers.
 
-The list of annotated peaks was then used to perform enrichment analyses on Gene Ontology (GO) terms and KEGG pathways. The enrichment analysis was carried out using clusterProfiler, with a p-value cutoff of 0.05 and a q-value cutoff of 0.01. This part of the analysis was scripted in `enrichment_analysis.rmd`. The enrichment analyses yielded results consistent with those from the original study. Most genes associated with the RIRs were linked to xenobiotic and steroid metabolism pathways, as well as typical hepatocyte functions like alcohol metabolism, lipid metabolism, and cholesterol metabolic processes. These functions are closely related to the activity of cytochrome P450 enzymes, suggesting a connection between the RIRs and key metabolic pathways in hepatocytes.
+<br></br>
+![Figure3](figures/annotation_pie.png)
+
+**Figure 3: Gene structure annotation and distribution of peaks for Rifampin-induced regions.** Only a minority of peaks are located in promoter regions, while most are found in more distal regions. This distribution suggests that the majority of ChIP-seq peaks are associated with distal regulatory elements such as enhancers.
+<br></br>
+
+The list of annotated peaks was then used to perform enrichment analyses on Gene Ontology (GO) terms and KEGG pathways. The enrichment analysis was carried out using clusterProfiler, with a p-value cutoff of 0.05 and a q-value cutoff of 0.01. This part of the analysis was scripted in `enrichment_analysis.rmd`. For the GO terms 74 enriched terms were found, while for KEGG only 5 enriched pathways were found. The enrichment analyses yielded results consistent with those from the original study. Most genes associated with the RIRs were linked to xenobiotic and steroid metabolism pathways, as well as typical hepatocyte functions like alcohol metabolism, lipid metabolism, and cholesterol metabolic processes (**Fig. 4 + Fig. 5**). These functions are closely related to the activity of cytochrome P450 enzymes, suggesting a connection between the RIRs and key metabolic pathways in hepatocytes.
+
+<br></br>
+![Figure4](figures/go_enrichment.png)
+
+**Figure 4: GO enrichment analysis.** Displayed are the top 20 Gene Ontology (GO) terms from the Biological Process (BP) category, sorted by the FDR-adjusted p-value.
+<br></br>
+
+<br></br>
+![Figure5](figures/kegg_enrichment.png)
+
+**Figure 5: KEGG enrichment analysis.** Displayed are the enriched KEGG pathway terms, sorted by the FDR-adjusted p-value.
+<br></br>
 
 ## Reference
 
-Smith, R. P. et al. Genome-Wide Discovery of Drug-Dependent Human Liver Regulatory Elements. PLoS Genet 10, e1004648 (2014).
+Smith, R.P. et al. (2014) ‘Genome-Wide Discovery of Drug-Dependent Human Liver Regulatory Elements’, PLoS Genetics, 10(10), p. e1004648. Available at: https://doi.org/10.1371/journal.pgen.1004648.
