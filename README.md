@@ -39,11 +39,27 @@ Following alignment, the resulting SAM files were converted to BAM files, which 
 To visualize the read coverage across the genome, BigWig files were created using deeptools. This process involved extending the read lengths to 200 bp and binning the genome into 30-base-pair windows. The read counts in each bin were then normalized using the RPKM method to account for differences in sequencing depth and fragment length. This conversion process was managed by a script called `bam2bigwig.sh`.
 
 
-## Peak Calling and Filtering
-Peak calling was performed to identify regions of significant protein-DNA interaction. Tools like MACS2 were used, and peaks were filtered to remove false positives or low-confidence calls.
+## Peak Calling and filtering
 
-## Genomic Arithmetic
-Genomic arithmetic involved operations such as intersecting peaks with gene annotations or other genomic features. Tools like BEDTools were employed for these tasks.
+Peak calling was performed to identify regions with significant protein-DNA interactions. For this analysis, MACS3 was used, with a p-value cutoff of 1e-5. All samples were analyzed against the input control, SRR1642055, to identify peaks that differed significantly from background noise. After peak calling, the resulting peaks were filtered against blacklisted regions to remove known artifacts or problematic areas in the GrCH38 genome. The blacklisted regions were obtained from the ENCODE project (ENCFF356LFX.bed). The process of peak calling and filtering was organized in a script called `peak_calling_filtering`.
+
+The following table summarizes the number of peaks obtained for each sample after filtering, with the first column indicating the corresponding experiment description:
+
+| Description                                       | Number of Peaks | Experiment              |
+|---------------------------------------------------|-----------------|-------------------------|
+| H3K27ac - Rifampin                                | 56,819          | SRR1642051              |
+| H3K4me1 - Rifampin                                | 8,093           | SRR1642052              |
+| H3K27ac - DMSO                                    | 47,786          | SRR1642053              |
+| H3K4me1 - DMSO                                    | 9,111           | SRR1642054              |
+| PXR - DMSO                                        | 2,615           | SRR1642056              |
+| PXR - Rifampin                                    | 1,547           | SRR1642057              |
+| p300 - Rifampin                                   | 2,508           | SRR1642058              |
+| p300 - DMSO                                       | 3,402           | SRR1642059              |
+| **Total**                                         | **131,881**     | **Total**               |
+
+The total number of resulting peaks across all samples after filtering was 131,881. This peak calling and filtering process provides a set of reliable regions for subsequent analysis, reducing the likelihood of false positives due to genomic artifacts.
+
+## Genomic arithmetic
 
 ## Annotation and GO-Term Enrichment
 The identified peaks were annotated with respect to known genomic features. Gene ontology (GO) term enrichment analysis was conducted to understand the functional significance of these regions.
