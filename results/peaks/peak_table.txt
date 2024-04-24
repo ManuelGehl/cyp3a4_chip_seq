@@ -1,0 +1,9 @@
+56819	SRR1642051_filtered.bed
+8093	SRR1642052_filtered.bed
+47786	SRR1642053_filtered.bed
+9111	SRR1642054_filtered.bed
+2615	SRR1642056_filtered.bed
+1547	SRR1642057_filtered.bed
+2508	SRR1642058_filtered.bed
+3402	SRR1642059_filtered.bed
+131881	total
