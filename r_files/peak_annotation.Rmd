@@ -56,8 +56,7 @@ plotAnnoPie(
 
 ```{r}
 # Save annotations as file
-peak_annotation = as.data.frame(peak_annotation)
-write.table(peak_annotation, "peak_annotation.txt", row.names = FALSE, col.names = TRUE, sep = "\t", quote = FALSE)
+write.table(as.data.frame(peak_annotation), "peak_annotation.txt", row.names = FALSE, col.names = TRUE, sep = "\t", quote = FALSE)
 ```
 
 
