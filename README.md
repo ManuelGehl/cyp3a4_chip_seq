@@ -61,8 +61,20 @@ The total number of resulting peaks across all samples after filtering was 131,8
 
 ## Genomic arithmetic
 
-## Annotation and GO-Term Enrichment
-The identified peaks were annotated with respect to known genomic features. Gene ontology (GO) term enrichment analysis was conducted to understand the functional significance of these regions.
+To assess the unique and intersecting peaks between DMSO- and Rifampin-treated samples, BEDtools was used. A pipeline (`overlapping_peaks.sh`) was created to determine the number of unique and intersecting peaks for each pair of DMSO and Rifampin experiments. The results were outputted as TSV files, and a Jupyter notebook (`venn_diagrams.ipynb`) was used to generate Venn diagrams for visualization.
 
-## Identification of Rifampin-Induced Regions
-Comparative analysis was performed to identify regions uniquely associated with Rifampin treatment. Differential peak calling and statistical analysis were used to determine significant changes.
+This analysis revealed that there was no strong recruitment of any transcription factor upon Rifampin treatment. In contrast, the authors of the original study reported a roughly six-fold increase in PXR binding upon Rifampin treatment. However, a significant limitation in the current analysis is the lack of replicates, which affects the reliability of differential binding studies.
+
+To further understand the impact of Rifampin treatment, all unique peaks from DMSO-treated experiments were combined into `dmso_overlaps.bed`, while all unique peaks from Rifampin-treated experiments were combined into `rif_overlaps.bed`. Using BEDtools, the number of unique peaks in each dataset and their intersection were calculated, aiming to identify peaks that only appear in Rifampin-treated samples but not in DMSO-treated samples. These unique peaks are candidates for regions potentially recruited by Rifampin treatment and were designated as Rifampin-Induced Regions (RIRs) by the authors of the study.
+
+A significant observation from the analysis was the identification of Rifampin-Induced Regions (RIRs) in the genomic vicinity of the open reading frame (ORF) of CYP3A4. CYP3A4 is one of the genes with the highest differential expression upon Rifampin treatment, as previously reported. Two RIRs were identified in this region. The first corresponds to the promoter region of CYP3A4, suggesting a possible mechanism for the gene's increased expression. The second RIR aligns with an enhancer located near the proximal CYP3A7 gene. This finding is consistent with the results reported by the authors of the original study.
+
+## Annotation and enrichment analysis
+
+The Rifampin-Induced Regions (RIRs) were annotated using ChIPSeeker, with the TxDb.Hsapiens.UCSC.hg38.knownGene database and the org.Hs.eg.db package. This annotation process was conducted using the script `peak_annotation.rmd`. The analysis revealed that most of the identified peaks were located in distal regions rather than promoter regions, which aligns with the findings of the original study. This suggests that the RIRs might be linked to regulatory elements such as enhancers.
+
+The list of annotated peaks was then used to perform enrichment analyses on Gene Ontology (GO) terms and KEGG pathways. The enrichment analysis was carried out using clusterProfiler, with a p-value cutoff of 0.05 and a q-value cutoff of 0.01. This part of the analysis was scripted in `enrichment_analysis.rmd`. The enrichment analyses yielded results consistent with those from the original study. Most genes associated with the RIRs were linked to xenobiotic and steroid metabolism pathways, as well as typical hepatocyte functions like alcohol metabolism, lipid metabolism, and cholesterol metabolic processes. These functions are closely related to the activity of cytochrome P450 enzymes, suggesting a connection between the RIRs and key metabolic pathways in hepatocytes.
+
+## Reference
+
+Smith, R. P. et al. Genome-Wide Discovery of Drug-Dependent Human Liver Regulatory Elements. PLoS Genet 10, e1004648 (2014).
