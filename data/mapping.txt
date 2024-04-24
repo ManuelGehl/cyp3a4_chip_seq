@@ -1,0 +1,9 @@
+SRR1642051	ChIP-seq on Human Hepatocytes- Rif_K27ac
+SRR1642052	ChIP-seq on Human Hepatocytes- Rif_K4me1
+SRR1642053	ChIP-seq on Human Hepatocytes- DMSO K27ac
+SRR1642054	ChIP-seq on Human Hepatocytes- DMSO K4me1
+SRR1642055	ChIP-seq on Human Hepatocytes- Hu8080 Input
+SRR1642056	ChIP-seq on Human Hepatocytes- DMSO PXR
+SRR1642057	ChIP-seq on Human Hepatocytes- Rif PXR
+SRR1642058	ChIP-seq on Human Hepatocytes- Rif p300
+SRR1642059	ChIP-seq on Human Hepatocytes- DMSO p300
