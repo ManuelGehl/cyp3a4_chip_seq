@@ -8,7 +8,7 @@ The key results and their implications are summarized in this section.
 ChIP-seq is a method used to analyze protein-DNA interactions across the genome. 
 This study aims to identify binding sites and determine how they are influenced by the treatment with Rifampin.
 
-## Quality control $ trimming
+## Quality control & trimming
 This ChIP-seq analysis involved four different ChIP settings, each targeting either a transcription factor (PXR or p300) or a histone modification (H3K4me1 or H3K27ac). 
 The experiments were conducted with and without Rifampin to understand the drug's impact on protein-DNA interactions. The dataset also included one input control (**Tab. 1**).
 
