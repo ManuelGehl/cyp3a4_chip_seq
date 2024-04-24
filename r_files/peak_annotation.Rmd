@@ -1,0 +1,64 @@
+---
+title: "Peak annotation"
+output: html_notebook
+---
+
+```{r}
+# Load packages
+library(ChIPseeker)
+library(TxDb.Hsapiens.UCSC.hg38.knownGene)
+library(rtracklayer)
+library("org.Hs.eg.db")
+library(RColorBrewer)
+```
+
+
+
+```{r}
+# Initialize gene structure database
+tx_database = TxDb.Hsapiens.UCSC.hg38.knownGene
+
+# Read in peaks from intersection
+extra_cols = c(signalValue = "numeric", pValue = "numeric", qValue = "numeric", peak = "integer")
+peaks = import("../results/peaks/rif_induced.bed", format = "BED", extraCols = extra_cols)
+
+# Check peaks
+peaks
+```
+
+
+```{r}
+# Perform annotation
+peak_annotation = annotatePeak(
+  peak = peaks,
+  TxDb = tx_database,
+  level = "gene",
+  annoDb="org.Hs.eg.db"
+)
+
+# Check
+peak_annotation
+```
+
+
+```{r}
+# Create a color palette
+palette_size = 11
+color_pal = brewer.pal(palette_size, "RdYlBu")
+
+# Plot annotation pie diagram
+plotAnnoPie(
+  peak_annotation,
+  ndigit = 1,
+  col = color_pal)
+```
+
+
+```{r}
+# Save annotations as file
+peak_annotation = as.data.frame(peak_annotation)
+write.table(peak_annotation, "peak_annotation.txt", row.names = FALSE, col.names = TRUE, sep = "\t", quote = FALSE)
+```
+
+
+
