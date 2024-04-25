@@ -1,8 +1,11 @@
 # cyp3a4_chip_seq
 
 ## Summary
-This report presents the findings from a ChIP-seq analysis, detailing the steps from data processing to the identification of regions impacted by Rifampin. 
-The key results and their implications are summarized in this section.
+This project, based on the ChIP-seq analysis from the paper by Smith et al. (2014) titled "Genome-Wide Discovery of Drug-Dependent Human Liver Regulatory Elements", investigated the effect of rifampin treatment on protein-DNA interactions in human hepatocytes. The study focused on specific transcription factors (PXR, p300) and histone modifications (H3K4me1, H3K27ac) associated with active expression, comparing ChIP-seq data from DMSO- and rifampin-treated samples.
+
+Trimmed reads were mapped to the GrCh38 genome using `Bowtie1`, and unique and overlapping peaks were identified using `BEDtools`, followed by peak calling using `MACS3`. Data were filtered against blacklisted regions to remove genomic artifacts.
+
+Rifampin-induced regions (RIRs) were identified by first filtering for peaks that occurred in similar regions for all 4 antibodies in the DMSO-treated and rifampin-treated samples, respectively, and second by excluding peaks in the rifampin dataset that also occurred under DMSO conditions. Annotation with `ChIPSeeker` indicated that most RIRs were located in distal regions, suggesting an association with enhancers. Enrichment analysis with `clusterProfiler` revealed that genes associated with RIRs are involved in key metabolic pathways, including xenobiotic and steroid metabolism, typical hepatocyte functions, and cytochrome P450 enzyme activity.
 
 ## Introduction
 ChIP-seq is a method used to analyze protein-DNA interactions across the genome. 
