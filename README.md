@@ -8,8 +8,11 @@ Trimmed reads were mapped to the GrCh38 genome using `Bowtie1`, and unique and o
 Rifampin-induced regions (RIRs) were identified by first filtering for peaks that occurred in similar regions for all 4 antibodies in the DMSO-treated and rifampin-treated samples, respectively, and second by excluding peaks in the rifampin dataset that also occurred under DMSO conditions. Annotation with `ChIPSeeker` indicated that most RIRs were located in distal regions, suggesting an association with enhancers. Enrichment analysis with `clusterProfiler` revealed that genes associated with RIRs are involved in key metabolic pathways, including xenobiotic and steroid metabolism, typical hepatocyte functions, and cytochrome P450 enzyme activity.
 
 ## Introduction
-ChIP-seq is a method used to analyze protein-DNA interactions across the genome. 
-This study aims to identify binding sites and determine how they are influenced by the treatment with Rifampin.
+Drug efficacy can vary widely between patients due to differences in individual genotypes. Many drugs are metabolized in the liver and intestine by enzymes that contribute significantly to the observed differences in drug response between individuals. Understanding these differences is critical to optimizing drug efficacy and minimizing adverse effects.
+
+An important class of drug-metabolizing enzymes is the cytochrome P450 (CYP450) family, of which CYP3A4 is particularly important. CYP3A4 is responsible for metabolizing approximately 50% of all prescription drugs, yet its expression can vary widely (5-20 fold) among individuals. Despite this variability, only a few SNPs in the CYP3A4 gene have been identified that could potentially explain the differential expression. This suggests that other factors, such as distal regulatory elements such as enhancers, may play an important role in driving this variability.
+
+To investigate these putative regulatory elements, a ChIP-seq analysis was performed using antibodies against the 4 targets PXR, p300, H3K27ac and H3K4me1. The pregnane X receptor PXR is activated by a variety of xenobiotics (e.g. rifampin) and has been shown to stimulate CYP3A4 expression. However, the exact binding site of PXR on DNA remains elusive. In combination with other enhancer markers such as p300, H3K27ac and H3K4me1, which are associated with active chromatin, the analysis could help to identify the underlying mechanism of CYP3A4 expression differences.
 
 ## Quality control & trimming
 This ChIP-seq analysis involved four different ChIP settings, each targeting either a transcription factor (PXR or p300) or a histone modification (H3K4me1 or H3K27ac). 
