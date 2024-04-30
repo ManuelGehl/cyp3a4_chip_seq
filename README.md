@@ -79,7 +79,7 @@ To assess the unique and intersecting peaks between DMSO- and Rifampin-treated s
 This analysis revealed that there was no strong recruitment of any transcription factor upon Rifampin treatment (**Fig. 1**). In contrast, the authors of the original study reported a roughly six-fold increase in PXR binding upon Rifampin treatment. However, a significant limitation in the current analysis is the lack of replicates, which affects the reliability of differential binding studies.
 
 <br></br>
-![Figure1](figures/overlap.png)
+<img src=figures/overlap.png width=500>
 
 **Figure 1: Overlap between DMSO and Rifampin-treated samples for each antibody.**
 <br></br>
@@ -87,7 +87,7 @@ This analysis revealed that there was no strong recruitment of any transcription
 To further understand the impact of Rifampin treatment, all unique peaks from DMSO-treated experiments were combined into `dmso_overlaps.bed`, while all unique peaks from Rifampin-treated experiments were combined into `rif_overlaps.bed`. Using BEDtools, the number of unique peaks in each dataset and their intersection were calculated, aiming to identify peaks that only appear in Rifampin-treated samples but not in DMSO-treated samples. Both DMSO-treated and Rifampin-treated samples show a similar number of intersecting peaks, with each treatment group having approximately 4,700 unique peaks. The overlapping proportion between the two groups is around 2,000 peaks, indicating a significant intersection between the different treatment conditions (**Fig. 2**). The 2708 unique peaks are candidates for regions potentially recruited by Rifampin treatment and were designated as Rifampin-Induced Regions (RIRs) by the authors of the study.
 
 <br></br>
-![Figure2](figures/overlap2.png)
+<img src=figures/overlap2.png width=500>
 
 **Figure 2: Overlap between DMSO and Rifampin-treated samples for all antibodies.**
 <br></br>
@@ -99,7 +99,7 @@ A significant observation from the analysis was the identification of Rifampin-I
 The Rifampin-Induced Regions (RIRs) were annotated using ChIPSeeker, with the TxDb.Hsapiens.UCSC.hg38.knownGene database and the org.Hs.eg.db package. This annotation process was conducted using the script `peak_annotation.rmd`. The analysis revealed that most of the identified peaks were located in distal regions rather than promoter regions, which aligns with the findings of the original study (**Fig. 3**). This suggests that the RIRs might be linked to regulatory elements such as enhancers.
 
 <br></br>
-![Figure3](figures/annotation_pie.png)
+<img src=figures/annotation_pie.png width=500>
 
 **Figure 3: Gene structure annotation and distribution of peaks for Rifampin-induced regions.** Only a minority of peaks are located in promoter regions, while most are found in more distal regions. This distribution suggests that the majority of ChIP-seq peaks are associated with distal regulatory elements such as enhancers.
 <br></br>
@@ -107,13 +107,13 @@ The Rifampin-Induced Regions (RIRs) were annotated using ChIPSeeker, with the Tx
 The list of annotated peaks was then used to perform enrichment analyses on Gene Ontology (GO) terms and KEGG pathways. The enrichment analysis was carried out using clusterProfiler, with a p-value cutoff of 0.05 and a q-value cutoff of 0.01. This part of the analysis was scripted in `enrichment_analysis.rmd`. For the GO terms 74 enriched terms were found, while for KEGG only 5 enriched pathways were found. The enrichment analyses yielded results consistent with those from the original study. Most genes associated with the RIRs were linked to xenobiotic and steroid metabolism pathways, as well as typical hepatocyte functions like alcohol metabolism, lipid metabolism, and cholesterol metabolic processes (**Fig. 4 + Fig. 5**). These functions are closely related to the activity of cytochrome P450 enzymes, suggesting a connection between the RIRs and key metabolic pathways in hepatocytes.
 
 <br></br>
-![Figure4](figures/go_enrichment.png)
+<img src=figures/go_enrichment.png width=500>
 
 **Figure 4: GO enrichment analysis.** Displayed are the top 20 Gene Ontology (GO) terms from the Biological Process (BP) category, sorted by the FDR-adjusted p-value.
 <br></br>
 
 <br></br>
-![Figure5](figures/kegg_enrichment.png)
+<img src=figures/kegg_enrichment.png width=500>
 
 **Figure 5: KEGG enrichment analysis.** Displayed are the enriched KEGG pathway terms, sorted by the FDR-adjusted p-value.
 <br></br>
