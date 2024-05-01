@@ -92,30 +92,36 @@ To further understand the impact of Rifampin treatment, all unique peaks from DM
 **Figure 2: Overlap between DMSO and Rifampin-treated samples for all antibodies.**
 <br></br>
 
-A significant observation from the analysis was the identification of Rifampin-Induced Regions (RIRs) in the genomic vicinity of the open reading frame (ORF) of CYP3A4. CYP3A4 is one of the genes with the highest differential expression upon Rifampin treatment, as previously reported. Two RIRs were identified in this region. The first corresponds to the promoter region of CYP3A4, suggesting a possible mechanism for the gene's increased expression. The second RIR aligns with an enhancer located near the proximal CYP3A7 gene. This finding is consistent with the results reported by the authors of the original study.
+A significant observation from the analysis was the identification of Rifampin-Induced Regions (RIRs) in the genomic vicinity of the open reading frame (ORF) of CYP3A4. CYP3A4 is one of the genes with the highest differential expression upon Rifampin treatment, as previously reported. Two RIRs were identified in this region. The first corresponds to the promoter region of CYP3A4, suggesting a possible mechanism for the gene's increased expression. The second RIR aligns with an enhancer located near the proximal CYP3A7 gene (**Fig. 3**). This finding is consistent with the results reported by the authors of the original study.
+
+<br></br>
+<img src=figures/igv_overlap.png width=500>
+
+**Figure 3: Overlap of ChIP-seq peaks in the genomic vicinity of the cyp3a4 locus.** Blue color indicates DMSO-treated samples and red color indicates rifampin-treated samples.
+<br></br>
 
 ## Annotation and enrichment analysis
 
-The Rifampin-Induced Regions (RIRs) were annotated using ChIPSeeker, with the TxDb.Hsapiens.UCSC.hg38.knownGene database and the org.Hs.eg.db package. This annotation process was conducted using the script `peak_annotation.rmd`. The analysis revealed that most of the identified peaks were located in distal regions rather than promoter regions, which aligns with the findings of the original study (**Fig. 3**). This suggests that the RIRs might be linked to regulatory elements such as enhancers.
+The Rifampin-Induced Regions (RIRs) were annotated using ChIPSeeker, with the TxDb.Hsapiens.UCSC.hg38.knownGene database and the org.Hs.eg.db package. This annotation process was conducted using the script `peak_annotation.rmd`. The analysis revealed that most of the identified peaks were located in distal regions rather than promoter regions, which aligns with the findings of the original study (**Fig. 4**). This suggests that the RIRs might be linked to regulatory elements such as enhancers.
 
 <br></br>
 <img src=figures/annotation_pie.png width=500>
 
-**Figure 3: Gene structure annotation and distribution of peaks for Rifampin-induced regions.** Only a minority of peaks are located in promoter regions, while most are found in more distal regions. This distribution suggests that the majority of ChIP-seq peaks are associated with distal regulatory elements such as enhancers.
+**Figure 4: Gene structure annotation and distribution of peaks for Rifampin-induced regions.** Only a minority of peaks are located in promoter regions, while most are found in more distal regions. This distribution suggests that the majority of ChIP-seq peaks are associated with distal regulatory elements such as enhancers.
 <br></br>
 
-The list of annotated peaks was then used to perform enrichment analyses on Gene Ontology (GO) terms and KEGG pathways. The enrichment analysis was carried out using clusterProfiler, with a p-value cutoff of 0.05 and a q-value cutoff of 0.01. This part of the analysis was scripted in `enrichment_analysis.rmd`. For the GO terms 74 enriched terms were found, while for KEGG only 5 enriched pathways were found. The enrichment analyses yielded results consistent with those from the original study. Most genes associated with the RIRs were linked to xenobiotic and steroid metabolism pathways, as well as typical hepatocyte functions like alcohol metabolism, lipid metabolism, and cholesterol metabolic processes (**Fig. 4 + Fig. 5**). These functions are closely related to the activity of cytochrome P450 enzymes, suggesting a connection between the RIRs and key metabolic pathways in hepatocytes.
+The list of annotated peaks was then used to perform enrichment analyses on Gene Ontology (GO) terms and KEGG pathways. The enrichment analysis was carried out using clusterProfiler, with a p-value cutoff of 0.05 and a q-value cutoff of 0.01. This part of the analysis was scripted in `enrichment_analysis.rmd`. For the GO terms 74 enriched terms were found, while for KEGG only 5 enriched pathways were found. The enrichment analyses yielded results consistent with those from the original study. Most genes associated with the RIRs were linked to xenobiotic and steroid metabolism pathways, as well as typical hepatocyte functions like alcohol metabolism, lipid metabolism, and cholesterol metabolic processes (**Fig. 5 + Fig. 6**). These functions are closely related to the activity of cytochrome P450 enzymes, suggesting a connection between the RIRs and key metabolic pathways in hepatocytes.
 
 <br></br>
 <img src=figures/go_enrichment.png width=500>
 
-**Figure 4: GO enrichment analysis.** Displayed are the top 20 Gene Ontology (GO) terms from the Biological Process (BP) category, sorted by the FDR-adjusted p-value.
+**Figure 5: GO enrichment analysis.** Displayed are the top 20 Gene Ontology (GO) terms from the Biological Process (BP) category, sorted by the FDR-adjusted p-value.
 <br></br>
 
 <br></br>
 <img src=figures/kegg_enrichment.png width=500>
 
-**Figure 5: KEGG enrichment analysis.** Displayed are the enriched KEGG pathway terms, sorted by the FDR-adjusted p-value.
+**Figure 6: KEGG enrichment analysis.** Displayed are the enriched KEGG pathway terms, sorted by the FDR-adjusted p-value.
 <br></br>
 
 ## Reference
